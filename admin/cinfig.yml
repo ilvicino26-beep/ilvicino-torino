@@ -1,0 +1,89 @@
+backend:
+  name: git-gateway
+  branch: main
+
+media_folder: "assets/uploads"
+public_folder: "/assets/uploads"
+
+collections:
+
+  - name: "itinerari"
+    label: "Itinerari"
+    folder: "content/itinerari"
+    create: true
+    format: "json"
+    fields:
+      - { label: "Titolo", name: "titolo", widget: "string" }
+      - { label: "Descrizione", name: "descrizione", widget: "text" }
+      - { label: "Link", name: "link", widget: "string" }
+
+  - name: "mappe"
+    label: "Mappe"
+    folder: "content/mappe"
+    create: true
+    format: "json"
+    fields:
+      - { label: "Titolo", name: "titolo", widget: "string" }
+      - { label: "Descrizione", name: "descrizione", widget: "text" }
+      - { label: "Link", name: "link", widget: "string" }
+
+  - name: "consigli"
+    label: "Consigli Locali"
+    folder: "content/consigli"
+    create: true
+    format: "json"
+    fields:
+      - { label: "Titolo", name: "titolo", widget: "string" }
+      - { label: "Descrizione", name: "descrizione", widget: "text" }
+      - { label: "Link", name: "link", widget: "string" }
+
+  - name: "affiliazioni"
+    label: "Affiliazioni"
+    folder: "content/affiliazioni"
+    create: true
+    format: "json"
+    fields:
+      - { label: "Nome", name: "nome", widget: "string" }
+      - { label: "Programma", name: "programma", widget: "select", options: ["Booking", "GetYourGuide", "Musement", "Amazon"] }
+      - { label: "Link affiliato", name: "link", widget: "string" }
+      - { label: "Categoria", name: "categoria", widget: "string" }
+      - { label: "Immagine", name: "immagine", widget: "image" }
+
+  - name: "parcheggi"
+    label: "Parcheggi"
+    folder: "content/parcheggi"
+    create: true
+    format: "json"
+    fields:
+      - { label: "Nome", name: "nome", widget: "string" }
+      - { label: "Indirizzo", name: "indirizzo", widget: "string" }
+      - { label: "Link Google Maps", name: "maps", widget: "string" }
+
+  - name: "circoscrizioni"
+    label: "Circoscrizioni"
+    folder: "content/circoscrizioni"
+    create: true
+    format: "json"
+    fields:
+      - { label: "Nome", name: "nome", widget: "string" }
+      - { label: "Descrizione", name: "descrizione", widget: "text" }
+      - { label: "Link Notizie", name: "notizie", widget: "string" }
+      - { label: "Link Offerte", name: "offerte", widget: "string" }
+
+  - name: "bottoni"
+    label: "Bottoni Home"
+    folder: "content/bottoni"
+    create: true
+    format: "json"
+    fields:
+      - { label: "Testo", name: "testo", widget: "string" }
+      - { label: "Link", name: "link", widget: "string" }
+
+  - name: "premium"
+    label: "Link Premium"
+    folder: "content/premium"
+    create: true
+    format: "json"
+    fields:
+      - { label: "Titolo", name: "titolo", widget: "string" }
+      - { label: "Link", name: "link", widget: "string" }
