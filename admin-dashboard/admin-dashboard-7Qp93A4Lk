@@ -14,7 +14,7 @@
     <div id="login-screen" class="login-screen">
         <h2>Accesso Riservato</h2>
         <p>Inserisci la password per accedere</p>
-        <input type="password" id="passwordInput" placeholder="Password">
+      <input type="password" id="passwordInput" placeholder="Password">
         <button id="loginBtn">Accedi</button>
     </div>
 
