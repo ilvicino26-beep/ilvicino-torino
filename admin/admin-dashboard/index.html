@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Admin - Il Vicino</title>
+
+    <!-- Font Awesome per le icone -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<!-- LOGIN SCREEN -->
+<div id="login-screen" class="login-screen">
+    <div class="login-box">
+        <h2>Accesso Dashboard</h2>
+        <input type="password" id="passwordInput" placeholder="Password">
+        <button id="loginBtn">Accedi</button>
+        <p id="loginError" class="error" style="display:none;">Password errata</p>
+    </div>
+</div>
+
+<!-- TOAST -->
+<div id="toast"></div>
+
+<div class="dashboard">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+        <h2>Il Vicino</h2>
+        <nav>
+            <ul>
+                <li data-section="consigli"><i class="fa-solid fa-lightbulb"></i> Consigli</li>
+                <li data-section="affiliazioni"><i class="fa-solid fa-handshake"></i> Affiliazioni</li>
+                <li data-section="parcheggi"><i class="fa-solid fa-square-parking"></i> Parcheggi</li>
+                <li data-section="circoscrizioni"><i class="fa-solid fa-map"></i> Circoscrizioni</li>
+                <li data-section="bottom"><i class="fa-solid fa-bars"></i> Bottom</li>
+                <li data-section="premium"><i class="fa-solid fa-star"></i> Premium</li>
+            </ul>
+        </nav>
+    </aside>
+
+    <!-- CONTENUTO -->
+    <main class="content">
+
+        <!-- TOPBAR -->
+        <div class="topbar">
+            <h1>Dashboard Admin</h1>
+            <button id="themeToggle" class="theme-btn"><i class="fa-solid fa-moon"></i></button>
+        </div>
+
+        <div id="view">
+            <div id="loader" class="loader hidden"></div>
+            Seleziona una sezione dalla sidebar.
+        </div>
+
+    </main>
+
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
