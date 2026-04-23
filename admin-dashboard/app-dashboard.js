@@ -20,8 +20,15 @@ document.getElementById("loginBtn").addEventListener("click", async () => {
     const hash = await sha256(input);
 
     if (hash === PASSWORD_HASH) {
+        // Nasconde schermata login
         document.getElementById("login-screen").style.display = "none";
+
+        // Nasconde eventuale errore
         document.getElementById("loginError").style.display = "none";
+
+        // Redirect alla dashboard
+        window.location.href = "/admin-dashboard/index.html";
+
     } else {
         document.getElementById("loginError").style.display = "block";
     }
