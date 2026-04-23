@@ -1,8 +1,10 @@
-// PASSWORD HASH (SHA-256)
+// ===============================
+// 🔐 PASSWORD HASH (SHA-256)
 // Password reale: "ilvicino2024"
+// ===============================
 const PASSWORD_HASH = "b8a9f6c6f3f3b8e0d0f4f7b8e2a9c7b4a7d4c6e2f3b8d0f4c6e2a9f7b4c6d2";
 
-// Funzione per calcolare SHA-256
+// Calcolo SHA-256
 async function sha256(message) {
     const msgBuffer = new TextEncoder().encode(message);
     const hashBuffer = await crypto.subtle.digest("SHA-256", msgBuffer);
@@ -10,7 +12,9 @@ async function sha256(message) {
     return hashArray.map(b => b.toString(16).padStart(2, "0")).join("");
 }
 
-// Controllo accesso
+// ===============================
+// 🔐 LOGIN
+// ===============================
 document.getElementById("loginBtn").addEventListener("click", async () => {
     const input = document.getElementById("passwordInput").value;
     const hash = await sha256(input);
@@ -22,15 +26,21 @@ document.getElementById("loginBtn").addEventListener("click", async () => {
     }
 });
 
-// Tema scuro
+// ===============================
+// 🌙 TEMA SCURO
+// ===============================
 document.getElementById("themeToggle").addEventListener("click", () => {
     document.body.classList.toggle("dark");
 });
 
-// Tracker file modificati
+// ===============================
+// 📁 TRACKER FILE MODIFICATI
+// ===============================
 let modifiedFiles = {};
 
-// Sidebar con evidenziazione attiva
+// ===============================
+// 📌 SIDEBAR + NAVIGAZIONE
+// ===============================
 document.querySelectorAll(".sidebar li").forEach(item => {
     item.addEventListener("click", () => {
 
@@ -53,7 +63,9 @@ document.querySelectorAll(".sidebar li").forEach(item => {
     });
 });
 
-// Carica i contenuti reali
+// ===============================
+// 📥 CARICA CONTENUTI CONSIGLI
+// ===============================
 async function loadConsigli() {
     const view = document.getElementById("view");
     const loader = document.getElementById("loader");
@@ -64,7 +76,7 @@ async function loadConsigli() {
     const res = await fetch("/.netlify/functions/get-consigli");
     const data = await res.json();
 
-    // Pulsante SALVA TUTTO
+    // Header + pulsante SALVA TUTTO
     let html = `
         <h2 style="display:flex; justify-content:space-between; align-items:center;">
             Consigli
@@ -72,6 +84,7 @@ async function loadConsigli() {
         </h2>
     `;
 
+    // Card per ogni file
     data.forEach(item => {
         html += `
             <div class="card" id="card-${item.file}">
@@ -108,7 +121,9 @@ async function loadConsigli() {
     setTimeout(() => view.classList.remove("fade-in"), 400);
 }
 
-// Salva singolo file
+// ===============================
+// 💾 SALVA SINGOLO FILE
+// ===============================
 async function saveConsiglio(file) {
     const button = event.target;
     const content = document.getElementById(`text-${file}`).value;
@@ -148,7 +163,9 @@ async function saveConsiglio(file) {
     }, 1000);
 }
 
-// Salva TUTTI i file modificati
+// ===============================
+// 💾 SALVA TUTTI I FILE
+// ===============================
 async function saveAll() {
     const button = document.getElementById("saveAllBtn");
 
@@ -186,7 +203,9 @@ async function saveAll() {
     showToast("Tutti i file salvati");
 }
 
-// Toast elegante
+// ===============================
+// 🔔 TOAST
+// ===============================
 function showToast(message) {
     const toast = document.getElementById("toast");
     toast.textContent = message;
@@ -197,7 +216,9 @@ function showToast(message) {
     }, 2500);
 }
 
-// Autosave ogni 10 secondi
+// ===============================
+// 🔄 AUTOSAVE OGNI 10 SECONDI
+// ===============================
 setInterval(() => {
     for (const file in modifiedFiles) {
         if (modifiedFiles[file]) {
