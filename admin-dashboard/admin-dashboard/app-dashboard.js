@@ -21,6 +21,7 @@ document.getElementById("loginBtn").addEventListener("click", async () => {
 
     if (hash === PASSWORD_HASH) {
         document.getElementById("login-screen").style.display = "none";
+        document.getElementById("loginError").style.display = "none";
     } else {
         document.getElementById("loginError").style.display = "block";
     }
@@ -76,7 +77,6 @@ async function loadConsigli() {
     const res = await fetch("/.netlify/functions/get-consigli");
     const data = await res.json();
 
-    // Header + pulsante SALVA TUTTO
     let html = `
         <h2 style="display:flex; justify-content:space-between; align-items:center;">
             Consigli
@@ -84,7 +84,6 @@ async function loadConsigli() {
         </h2>
     `;
 
-    // Card per ogni file
     data.forEach(item => {
         html += `
             <div class="card" id="card-${item.file}">
@@ -103,10 +102,8 @@ async function loadConsigli() {
     loader.classList.add("hidden");
     view.innerHTML = html;
 
-    // Attiva SALVA TUTTO
     document.getElementById("saveAllBtn").addEventListener("click", saveAll);
 
-    // Listener modifiche
     data.forEach(item => {
         const textarea = document.getElementById(`text-${item.file}`);
         const indicator = document.getElementById(`mod-${item.file}`);
@@ -128,7 +125,6 @@ async function saveConsiglio(file) {
     const button = event.target;
     const content = document.getElementById(`text-${file}`).value;
 
-    // Loader pulsante
     button.classList.add("btn-loading");
     const oldText = button.textContent;
     button.textContent = "Salvataggio...";
@@ -142,16 +138,13 @@ async function saveConsiglio(file) {
     const result = await res.json();
     showToast(result.message);
 
-    // Rimuove indicatore
     document.getElementById(`mod-${file}`).style.display = "none";
     modifiedFiles[file] = false;
 
-    // Flash verde
     const card = document.getElementById(`card-${file}`);
     card.classList.add("flash-save");
     setTimeout(() => card.classList.remove("flash-save"), 500);
 
-    // Stato salvato
     button.classList.remove("btn-loading");
     button.classList.add("btn-saved");
     button.textContent = "Salvato ✓";
@@ -176,7 +169,6 @@ async function saveAll() {
         return;
     }
 
-    // Conferma se > 5 file
     if (filesToSave.length > 5) {
         const conferma = confirm(
             `Hai ${filesToSave.length} file modificati.\nVuoi davvero salvarli tutti?`
@@ -188,7 +180,6 @@ async function saveAll() {
         }
     }
 
-    // Loader pulsante
     button.classList.add("btn-loading");
     const oldText = button.textContent;
     button.textContent = "Salvataggio...";
