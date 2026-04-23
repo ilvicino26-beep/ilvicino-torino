@@ -1,121 +1,54 @@
-// ===============================
-// ACCESSO TRAMITE URL SEGRETO
-// ===============================
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard – Il Vicino Torino</title>
 
-const SECRET_KEY = "FJ39dkL02mA9Qp"; // Cambiala quando vuoi
+    <link rel="stylesheet" href="styles.css">
+</head>
 
-// Legge la chiave dall'URL
-const urlParams = new URLSearchParams(window.location.search);
-const key = urlParams.get("key");
+<body>
 
-// Se la chiave NON è corretta → blocca tutto
-if (key !== SECRET_KEY) {
-    document.body.innerHTML = `
-        <h2 style="text-align:center; margin-top:50px;">
-            ❌ Accesso negato
-        </h2>
-        <p style="text-align:center;">
-            URL non valido.
-        </p>
-    `;
-} else {
-    // Se la chiave è corretta → nasconde il login e mostra la dashboard
-    const loginScreen = document.getElementById("login-screen");
-    if (loginScreen) loginScreen.style.display = "none";
-}
+    <!-- LOGIN SCREEN (verrà nascosto dall’URL segreto) -->
+    <div id="login-screen" class="login-screen">
+        <h2>Accesso Riservato</h2>
+        <p>Inserisci la password per accedere</p>
+        <input type="password" id="passwordInput" placeholder="Password">
+        <button id="loginBtn">Accedi</button>
+    </div>
 
-// ===============================
-// 🔐 PASSWORD HASH (SHA-256)
-// (NON USATA MA LA LASCIO SE TI SERVE IN FUTURO)
-// ===============================
-async function sha256(message) {
-    const msgBuffer = new TextEncoder().encode(message);
-    const hashBuffer = await crypto.subtle.digest("SHA-256", msgBuffer);
-    const hashArray = Array.from(new Uint8Array(hashBuffer));
-    return hashArray.map(b => b.toString(16).padStart(2, "0")).join("");
-}
+    <!-- DASHBOARD -->
+    <div id="dashboard" class="dashboard">
 
-// ===============================
-// 🌙 TEMA SCURO
-// ===============================
-document.getElementById("themeToggle").addEventListener("click", () => {
-    document.body.classList.toggle("dark");
-});
+        <!-- SIDEBAR -->
+        <ul class="sidebar">
+            <li data-section="consigli" class="active">Consigli</li>
+            <li data-section="eventi">Eventi</li>
+            <li data-section="ristoranti">Ristoranti</li>
+            <li data-section="negozi">Negozi</li>
+            <li data-section="altro">Altro</li>
+        </ul>
 
-// ===============================
-// 📁 TRACKER FILE MODIFICATI
-// ===============================
-let modifiedFiles = {};
+        <!-- MAIN VIEW -->
+        <div id="view" class="view">
+            <h2>Benvenuto nella Dashboard</h2>
+            <p>Seleziona una sezione dal menu.</p>
+        </div>
 
-// ===============================
-// 📌 SIDEBAR + NAVIGAZIONE
-// ===============================
-document.querySelectorAll(".sidebar li").forEach(item => {
-    item.addEventListener("click", () => {
+        <!-- LOADER -->
+        <div id="loader" class="loader hidden">Caricamento...</div>
 
-        document.querySelectorAll(".sidebar li").forEach(li => li.classList.remove("active"));
-        item.classList.add("active");
+        <!-- TOAST -->
+        <div id="toast" class="toast"></div>
 
-        const section = item.getAttribute("data-section");
+        <!-- TEMA SCURO -->
+        <button id="themeToggle" class="theme-toggle">🌓</button>
 
-        if (section === "consigli") {
-            loadConsigli();
-        } else {
-            const view = document.getElementById("view");
-            view.innerHTML = `
-                <h2>${section}</h2>
-                <p>Caricamento contenuti...</p>
-            `;
-            view.classList.add("fade-in");
-            setTimeout(() => view.classList.remove("fade-in"), 400);
-        }
-    });
-});
+    </div>
 
-// ===============================
-// 📥 CARICA CONTENUTI CONSIGLI
-// ===============================
-async function loadConsigli() {
-    const view = document.getElementById("view");
-    const loader = document.getElementById("loader");
+    <!-- SCRIPT CORRETTO -->
+    <script src="admin-dashboard-7Qp93A4Lk.js"></script>
 
-    view.innerHTML = "";
-    loader.classList.remove("hidden");
-
-    const res = await fetch("/.netlify/functions/get-consigli");
-    const data = await res.json();
-
-    let html = `
-        <h2 style="display:flex; justify-content:space-between; align-items:center;">
-            Consigli
-            <button id="saveAllBtn" class="save-all-btn">💾 Salva tutto</button>
-        </h2>
-    `;
-
-    data.forEach(item => {
-        html += `
-            <div class="card" id="card-${item.file}">
-                <h3>
-                    ${item.file}
-                    <span id="mod-${item.file}" class="modified-indicator" style="display:none;">● Modificato</span>
-                </h3>
-
-                <textarea id="text-${item.file}">${item.content}</textarea>
-
-                <button onclick="saveConsiglio('${item.file}')">Salva</button>
-            </div>
-        `;
-    });
-
-    loader.classList.add("hidden");
-    view.innerHTML = html;
-
-    document.getElementById("saveAllBtn").addEventListener("click", saveAll);
-
-    data.forEach(item => {
-        const textarea = document.getElementById(`text-${item.file}`);
-        const indicator = document.getElementById(`mod-${item.file}`);
-
-        textarea.addEventListener("input", () => {
-            indicator.style.display = "inline";
-            modifiedFiles[item
+</body>
+</html>
