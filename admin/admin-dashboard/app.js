@@ -1,37 +1,10 @@
-// PASSWORD HASH (SHA-256)
-// Password reale: "ilvicino2024"
-const PASSWORD_HASH = "b8a9f6c6f3f3b8e0d0f4f7b8e2a9c7b4a7d4c6e2f3b8d0f4c6e2a9f7b4c6d2";
-
-// Funzione per calcolare SHA-256
-async function sha256(message) {
-    const msgBuffer = new TextEncoder().encode(message);
-    const hashBuffer = await crypto.subtle.digest("SHA-256", msgBuffer);
-    const hashArray = Array.from(new Uint8Array(hashBuffer));
-    return hashArray.map(b => b.toString(16).padStart(2, "0")).join("");
-}
-
-// Controllo accesso
-document.getElementById("loginBtn").addEventListener("click", async () => {
-    const input = document.getElementById("passwordInput").value;
-    const hash = await sha256(input);
-
-    if (hash === PASSWORD_HASH) {
-        document.getElementById("login-screen").style.display = "none";
-    } else {
-        document.getElementById("loginError").style.display = "block";
-    }
-});
-
-
 // TEMA SCURO
 document.getElementById("themeToggle").addEventListener("click", () => {
     document.body.classList.toggle("dark");
 });
 
-
 // TRACKER FILE MODIFICATI
 let modifiedFiles = {};
-
 
 // 1️⃣ Sidebar con evidenziazione attiva
 document.querySelectorAll(".sidebar li").forEach(item => {
@@ -55,7 +28,6 @@ document.querySelectorAll(".sidebar li").forEach(item => {
         }
     });
 });
-
 
 // 2️⃣ Carica i contenuti reali
 async function loadConsigli() {
@@ -112,7 +84,6 @@ async function loadConsigli() {
     setTimeout(() => view.classList.remove("fade-in"), 400);
 }
 
-
 // 3️⃣ Salva singolo file
 async function saveConsiglio(file) {
     const button = event.target;
@@ -153,7 +124,6 @@ async function saveConsiglio(file) {
     }, 1000);
 }
 
-
 // 4️⃣ Salva TUTTI i file modificati
 async function saveAll() {
     const button = document.getElementById("saveAllBtn");
@@ -192,7 +162,6 @@ async function saveAll() {
     showToast("Tutti i file salvati");
 }
 
-
 // 5️⃣ Toast elegante
 function showToast(message) {
     const toast = document.getElementById("toast");
@@ -203,7 +172,6 @@ function showToast(message) {
         toast.classList.remove("show");
     }, 2500);
 }
-
 
 // 6️⃣ Autosave ogni 10 secondi
 setInterval(() => {
